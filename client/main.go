@@ -11,7 +11,6 @@ func main() {
 	d := display.New()
 	rl.InitWindow(int32(d.Width), int32(d.Height), "vQuest")
 	rl.SetTargetFPS(60)
-	recColor := rl.Color{R: 255, G: 50, B: 0, A: 172}
 	rectX := float32(d.Width) / 2
 	rectWidth := float32(d.Width) * 0.1
 	rectHeight := float32(d.Height) * 0.05
@@ -59,13 +58,31 @@ func main() {
 				}
 			}
 		}
+		rl.DrawRectangleRec(loginRect, rl.LightGray)
+		rl.DrawRectangleRec(passRect, rl.LightGray)
+		drawOutlineOnCollision(loginRect)
+		drawOutlineOnCollision(passRect)
 		rl.ClearBackground(rl.RayWhite)
 		wdt := float32(d.Width) * 0.3
-		rl.DrawRectangleRec(loginRect, recColor)
-		rl.DrawRectangleRec(passRect, recColor)
 		rl.DrawText("Login:", int32(wdt), int32(tH1), 20, rl.LightGray)
 		rl.DrawText("Password:", int32(wdt), int32(tH2), 20, rl.LightGray)
 		rl.EndDrawing()
 	}
 	rl.CloseWindow()
+}
+
+func mouseCollision(rec rl.Rectangle) bool {
+	if rl.CheckCollisionPointRec(rl.GetMousePosition(), rec) {
+		return true
+	}
+	return false
+}
+
+func drawOutlineOnCollision(r rl.Rectangle) {
+	rInt := r.ToInt32()
+	if mouseCollision(r) {
+		rl.DrawRectangleLines(rInt.X, rInt.Y, rInt.Width, rInt.Height, rl.Red)
+		return
+	}
+	rl.DrawRectangleLines(rInt.X, rInt.Y, rInt.Width, rInt.Height, rl.DarkGray)
 }
