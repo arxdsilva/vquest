@@ -61,7 +61,7 @@ func main() {
 		lInt := loginRect.ToInt32()
 		rl.DrawText(strings.Join(loginLetters, ""), lInt.X+5, lInt.Y+(lInt.Height/2), 20, rl.Maroon)
 		pInt := passRect.ToInt32()
-		rl.DrawText(strings.Join(passLetters, ""), pInt.X+5, pInt.Y+(pInt.Height/2), 20, rl.Maroon)
+		rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+(pInt.Height/2), 20, rl.Maroon)
 		rl.ClearBackground(rl.RayWhite)
 		wdt := float32(d.Width) * 0.3
 		rl.DrawText("Login:", int32(wdt), int32(tH1), 20, rl.LightGray)
