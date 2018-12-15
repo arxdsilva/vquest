@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/arxdsilva/vquest/client/display"
 	"github.com/gen2brain/raylib-go/raylib"
 )
@@ -27,8 +29,36 @@ func main() {
 		Width:  rectWidth,
 		Height: rectHeight,
 	}
+	var loginMouse, passMouse bool
+	// var loginLetters, passLetters []string
+	loginLetters := [10]string{}
+	var loginLettersCount, passLettersCount int
 	for !rl.WindowShouldClose() {
 		rl.BeginDrawing()
+		if rl.CheckCollisionPointRec(rl.GetMousePosition(), loginRect) {
+			loginMouse = true
+		} else {
+			loginMouse = false
+		}
+		if rl.CheckCollisionPointRec(rl.GetMousePosition(), passRect) {
+			passMouse = true
+		} else {
+			passMouse = false
+		}
+		if loginMouse || passMouse {
+			key := rl.GetKeyPressed()
+			if (key >= 32) && (key <= 125) {
+				if loginMouse && (loginLettersCount < 10) {
+					loginLetters[loginLettersCount] = fmt.Sprintf("%c", key)
+					loginLettersCount++
+					fmt.Println(loginLetters, loginLettersCount)
+				}
+				if passMouse && (passLettersCount < 10) {
+					// loginLetters
+					fmt.Println(passLettersCount)
+				}
+			}
+		}
 		rl.ClearBackground(rl.RayWhite)
 		wdt := float32(d.Width) * 0.3
 		rl.DrawRectangleRec(loginRect, recColor)
