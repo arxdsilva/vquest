@@ -71,10 +71,7 @@ func main() {
 		rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+(pInt.Height/2), 20, rl.Maroon)
 		rl.ClearBackground(rl.RayWhite)
 		wdt := float32(d.Width) * 0.4
-		lRInt := loginRect.ToInt32()
-		loginX := lRInt.X + int32(loginRect.Width/3.3)
-		loginY := lRInt.Y + int32(loginRect.Height/4)
-		rl.DrawText("Login", loginX, loginY, 20, rl.LightGray)
+		drawLoginClick(loginRect)
 		rl.DrawText("User:", int32(wdt), int32(tH1), 20, rl.LightGray)
 		rl.DrawText("Password:", int32(wdt), int32(tH2), 20, rl.LightGray)
 		rl.EndDrawing()
@@ -96,4 +93,15 @@ func drawOutlineOnCollision(r rl.Rectangle) {
 		return
 	}
 	rl.DrawRectangleLines(rInt.X, rInt.Y, rInt.Width, rInt.Height, rl.DarkGray)
+}
+
+func drawLoginClick(r rl.Rectangle) {
+	lRInt := r.ToInt32()
+	loginX := lRInt.X + int32(r.Width/3.3)
+	loginY := lRInt.Y + int32(r.Height/4)
+	if (mouseCollision(r)) && (rl.IsMouseButtonDown(rl.MouseLeftButton)) {
+		rl.DrawText("Login", loginX, loginY, 20, rl.White)
+		return
+	}
+	rl.DrawText("Login", loginX, loginY, 20, rl.LightGray)
 }
