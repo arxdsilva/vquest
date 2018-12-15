@@ -17,7 +17,11 @@ func main() {
 	loadLoginObjects(d)
 	for !rl.WindowShouldClose() {
 		rl.BeginDrawing()
-		drawLoginScreen(d)
+		if clientState == 0 {
+			drawLoginScreen(d)
+		} else {
+			drawConnectedScreen(d)
+		}
 		rl.EndDrawing()
 	}
 	rl.CloseWindow()

@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"log"
 	"net"
 	"strings"
@@ -27,12 +26,10 @@ func main() {
 func handleConnection(c net.Conn) {
 	fmt.Printf("Serving %s\n", c.RemoteAddr().String())
 	for {
-		fmt.Println("<<<<<<<")
 		netData, err := bufio.NewReader(c).ReadString('\n')
-		fmt.Println(string(netData), err, "<<<<<<<")
-		if (err != nil) && (err != io.EOF) {
-			fmt.Println(err)
-			break
+		if err != nil {
+			fmt.Println(err, c.RemoteAddr().String())
+			return
 		}
 		temp := strings.TrimSpace(string(netData))
 		if temp == "STOP" {
