@@ -29,6 +29,12 @@ func main() {
 		Width:  rectWidth,
 		Height: rectHeight,
 	}
+	loginRect := rl.Rectangle{
+		X:      rectX - rectWidth/2,
+		Y:      float32(d.Height) * 0.7,
+		Width:  rectWidth,
+		Height: rectHeight,
+	}
 	var userMouse, passMouse bool
 	var userLetters, passLetters []string
 	for !rl.WindowShouldClose() {
@@ -56,6 +62,7 @@ func main() {
 		}
 		rl.DrawRectangleRec(userRect, rl.LightGray)
 		rl.DrawRectangleRec(passRect, rl.LightGray)
+		rl.DrawRectangleRec(loginRect, rl.DarkGray)
 		drawOutlineOnCollision(userRect)
 		drawOutlineOnCollision(passRect)
 		lInt := userRect.ToInt32()
