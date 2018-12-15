@@ -8,6 +8,11 @@ import (
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
+var clientState int
+
+const loginScreen = 0
+const connected = 1
+
 func main() {
 	d := display.New()
 	rl.InitWindow(int32(d.Width), int32(d.Height), "vQuest")
