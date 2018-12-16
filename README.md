@@ -11,4 +11,5 @@ vQuest is a simple MMORPG made with golang.
     [ ] New character button on CS
 [ ] implement blinking char on `selectedField`
 [x] allign text input with blinking input  
-[ ] Solve encoding problem with pass character ''
+[ ] Solve encoding problem with pass character '•'
+[x] Fix blink Login button on `enter` key
