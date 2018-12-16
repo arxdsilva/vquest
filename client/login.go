@@ -8,7 +8,7 @@ import (
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
-var selectedField int
+var selectedField = 0
 var userMouse, passMouse bool
 var userLetters, passLetters []string
 var userRect, passRect, loginRect rl.Rectangle
@@ -83,8 +83,17 @@ func drawLoginScreen(d display.Display) {
 	hthUser := float32(d.Height) * 0.4
 	hthPass := float32(d.Height) * 0.5
 	drawLoginClick(loginRect)
+	rl.DrawText("vQuest", int32(wdt*0.65), int32(hthUser*0.2), 180, rl.DarkGray)
 	rl.DrawText("User:", int32(wdt), int32(hthUser), 20, rl.LightGray)
 	rl.DrawText("Password:", int32(wdt), int32(hthPass), 20, rl.LightGray)
+	if rl.IsKeyPressed(rl.KeyEnter) {
+		lRInt := loginRect.ToInt32()
+		loginX := lRInt.X + int32(loginRect.Width/3.3)
+		loginY := lRInt.Y + int32(loginRect.Height/4)
+		rl.DrawText("Login", loginX, loginY, 20, rl.White)
+		// go to next scene
+		// return
+	}
 }
 
 func drawOutlineOnCollision(r, l rl.Rectangle) {
