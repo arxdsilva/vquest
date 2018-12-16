@@ -86,7 +86,7 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawText("vQuest", int32(wdt*0.65), int32(hthUser*0.2), 180, rl.DarkGray)
 	rl.DrawText("User:", int32(wdt), int32(hthUser), 20, rl.LightGray)
 	rl.DrawText("Password:", int32(wdt), int32(hthPass), 20, rl.LightGray)
-	if rl.IsKeyPressed(rl.KeyEnter) {
+	if rl.IsKeyDown(rl.KeyEnter) {
 		lRInt := loginRect.ToInt32()
 		loginX := lRInt.X + int32(loginRect.Width/3.3)
 		loginY := lRInt.Y + int32(loginRect.Height/4)
