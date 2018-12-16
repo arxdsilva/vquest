@@ -42,29 +42,32 @@ func loadLoginObjects(d display.Display) {
 func drawLoginScreen(d display.Display) {
 	userMouse = mouseCollision(userRect)
 	passMouse = mouseCollision(passRect)
+	if userMouse {
+		selectedField = 0
+	}
+	if passMouse {
+		selectedField = 1
+	}
 	key := rl.GetKeyPressed()
 	if (rl.IsKeyPressed(rl.KeyTab)) && (selectedField == 0) {
 		selectedField = 1
 	} else if (rl.IsKeyPressed(rl.KeyTab)) && (selectedField == 1) {
 		selectedField = 0
 	}
-	fmt.Println(selectedField)
-	if userMouse || passMouse {
-		if (key >= 32) && (key <= 125) {
-			if userMouse && (len(userLetters) < 10) {
-				userLetters = append(userLetters, fmt.Sprintf("%c", key))
-			}
-			if passMouse && (len(passLetters) < 10) {
-				passLetters = append(passLetters, fmt.Sprintf("%c", key))
-			}
+	if (key >= 32) && (key <= 125) {
+		if (selectedField == 0) && (len(userLetters) < 10) {
+			userLetters = append(userLetters, fmt.Sprintf("%c", key))
 		}
-		if rl.IsKeyPressed(rl.KeyBackspace) {
-			if (userMouse) && (len(userLetters) > 0) {
-				userLetters = userLetters[:len(userLetters)-1]
-			}
-			if (passMouse) && (len(passLetters) > 0) {
-				passLetters = passLetters[:len(passLetters)-1]
-			}
+		if (selectedField == 1) && (len(passLetters) < 10) {
+			passLetters = append(passLetters, fmt.Sprintf("%c", key))
+		}
+	}
+	if rl.IsKeyPressed(rl.KeyBackspace) {
+		if (selectedField == 0) && (len(userLetters) > 0) {
+			userLetters = userLetters[:len(userLetters)-1]
+		}
+		if (selectedField == 1) && (len(passLetters) > 0) {
+			passLetters = passLetters[:len(passLetters)-1]
 		}
 	}
 	rl.DrawRectangleRec(userRect, rl.LightGray)
