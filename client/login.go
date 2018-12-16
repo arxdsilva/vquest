@@ -75,9 +75,9 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawRectangleRec(loginRect, rl.DarkGray)
 	drawOutlineOnCollision(userRect, passRect)
 	uInt := userRect.ToInt32()
-	rl.DrawText(strings.Join(userLetters, ""), uInt.X+5, uInt.Y+(uInt.Height/2), 20, rl.Maroon)
+	rl.DrawText(strings.Join(userLetters, ""), uInt.X+5, uInt.Y+int32(userRect.Height*0.33), 20, rl.Maroon)
 	pInt := passRect.ToInt32()
-	rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+(pInt.Height/2), 20, rl.Maroon)
+	rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+int32(passRect.Height*0.33), 20, rl.Maroon)
 	rl.ClearBackground(rl.RayWhite)
 	wdt := float32(d.Width) * 0.4
 	hthUser := float32(d.Height) * 0.4
