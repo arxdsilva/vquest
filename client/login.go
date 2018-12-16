@@ -8,7 +8,7 @@ import (
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
-var selectedField = 0
+var selectedField, framesCounter int
 var userMouse, passMouse bool
 var userLetters, passLetters []string
 var userRect, passRect, loginRect rl.Rectangle
@@ -74,8 +74,8 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawRectangleRec(passRect, rl.LightGray)
 	rl.DrawRectangleRec(loginRect, rl.DarkGray)
 	drawOutlineOnCollision(userRect, passRect)
-	lInt := userRect.ToInt32()
-	rl.DrawText(strings.Join(userLetters, ""), lInt.X+5, lInt.Y+(lInt.Height/2), 20, rl.Maroon)
+	uInt := userRect.ToInt32()
+	rl.DrawText(strings.Join(userLetters, ""), uInt.X+5, uInt.Y+(uInt.Height/2), 20, rl.Maroon)
 	pInt := passRect.ToInt32()
 	rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+(pInt.Height/2), 20, rl.Maroon)
 	rl.ClearBackground(rl.RayWhite)
@@ -94,6 +94,14 @@ func drawLoginScreen(d display.Display) {
 		// go to next scene
 		// return
 	}
+	if ((framesCounter / 20) % 3) == 0 {
+		if selectedField == 0 {
+			rl.DrawText("|", uInt.X+8+rl.MeasureText(strings.Join(userLetters, ""), 20), uInt.Y+12, 20, rl.Black)
+		} else {
+			rl.DrawText("|", pInt.X+8+rl.MeasureText(strings.Repeat("-", len(passLetters)), 20), pInt.Y+12, 20, rl.Black)
+		}
+	}
+	framesCounter++
 }
 
 func drawOutlineOnCollision(r, l rl.Rectangle) {
@@ -118,7 +126,3 @@ func drawLoginClick(r rl.Rectangle) {
 	}
 	rl.DrawText("Login", loginX, loginY, 20, rl.LightGray)
 }
-
-// if (((framesCounter/20)%2) == 0) {
-// 	DrawText("_", textBox.x + 8 + MeasureText(name, 40), textBox.y + 12, 40, MAROON);
-// }
