@@ -8,6 +8,7 @@ import (
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
+var selectedField int
 var userMouse, passMouse bool
 var userLetters, passLetters []string
 var userRect, passRect, loginRect rl.Rectangle
@@ -41,8 +42,14 @@ func loadLoginObjects(d display.Display) {
 func drawLoginScreen(d display.Display) {
 	userMouse = mouseCollision(userRect)
 	passMouse = mouseCollision(passRect)
+	key := rl.GetKeyPressed()
+	if (rl.IsKeyPressed(rl.KeyTab)) && (selectedField == 0) {
+		selectedField = 1
+	} else if (rl.IsKeyPressed(rl.KeyTab)) && (selectedField == 1) {
+		selectedField = 0
+	}
+	fmt.Println(selectedField)
 	if userMouse || passMouse {
-		key := rl.GetKeyPressed()
 		if (key >= 32) && (key <= 125) {
 			if userMouse && (len(userLetters) < 10) {
 				userLetters = append(userLetters, fmt.Sprintf("%c", key))
@@ -63,8 +70,7 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawRectangleRec(userRect, rl.LightGray)
 	rl.DrawRectangleRec(passRect, rl.LightGray)
 	rl.DrawRectangleRec(loginRect, rl.DarkGray)
-	drawOutlineOnCollision(userRect)
-	drawOutlineOnCollision(passRect)
+	drawOutlineOnCollision(userRect, passRect)
 	lInt := userRect.ToInt32()
 	rl.DrawText(strings.Join(userLetters, ""), lInt.X+5, lInt.Y+(lInt.Height/2), 20, rl.Maroon)
 	pInt := passRect.ToInt32()
@@ -78,13 +84,16 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawText("Password:", int32(wdt), int32(hthPass), 20, rl.LightGray)
 }
 
-func drawOutlineOnCollision(r rl.Rectangle) {
+func drawOutlineOnCollision(r, l rl.Rectangle) {
 	rInt := r.ToInt32()
-	if mouseCollision(r) {
+	lInt := l.ToInt32()
+	if selectedField == 0 {
 		rl.DrawRectangleLines(rInt.X, rInt.Y, rInt.Width, rInt.Height, rl.Red)
+		rl.DrawRectangleLines(lInt.X, lInt.Y, lInt.Width, lInt.Height, rl.DarkGray)
 		return
 	}
 	rl.DrawRectangleLines(rInt.X, rInt.Y, rInt.Width, rInt.Height, rl.DarkGray)
+	rl.DrawRectangleLines(lInt.X, lInt.Y, lInt.Width, lInt.Height, rl.Red)
 }
 
 func drawLoginClick(r rl.Rectangle) {
@@ -97,3 +106,7 @@ func drawLoginClick(r rl.Rectangle) {
 	}
 	rl.DrawText("Login", loginX, loginY, 20, rl.LightGray)
 }
+
+// if (((framesCounter/20)%2) == 0) {
+// 	DrawText("_", textBox.x + 8 + MeasureText(name, 40), textBox.y + 12, 40, MAROON);
+// }
