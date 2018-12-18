@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	l, err := net.Listen("tcp4", ":3333")
+	l, err := net.Listen("tcp", ":3333")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func handleConnection(c net.Conn) {
 			break
 		}
 		result := fmt.Sprintf("%s voce esta conectado.\n", string(netData))
-		c.Write([]byte(string(result)))
+		c.Write([]byte(result))
 	}
 	c.Close()
 }
