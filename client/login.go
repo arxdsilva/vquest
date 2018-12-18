@@ -11,6 +11,7 @@ import (
 var selectedField, framesCounter int
 var userMouse, passMouse bool
 var userLetters, passLetters []string
+var userName, password string
 var userRect, passRect, loginRect rl.Rectangle
 
 func loadLoginObjects(d display.Display) {
@@ -78,7 +79,6 @@ func drawLoginScreen(d display.Display) {
 	rl.DrawText(strings.Join(userLetters, ""), uInt.X+5, uInt.Y+int32(userRect.Height*0.33), 20, rl.Maroon)
 	pInt := passRect.ToInt32()
 	rl.DrawText(strings.Repeat("-", len(passLetters)), pInt.X+5, pInt.Y+int32(passRect.Height*0.33), 20, rl.Maroon)
-	rl.ClearBackground(rl.RayWhite)
 	wdt := float32(d.Width) * 0.4
 	hthUser := float32(d.Height) * 0.4
 	hthPass := float32(d.Height) * 0.5
@@ -91,8 +91,10 @@ func drawLoginScreen(d display.Display) {
 		loginX := lRInt.X + int32(loginRect.Width/3.3)
 		loginY := lRInt.Y + int32(loginRect.Height/4)
 		rl.DrawText("Login", loginX, loginY, 20, rl.White)
-		// go to next scene
-		// return
+		clientState = 1
+		userName = strings.Join(userLetters, "")
+		password = strings.Join(passLetters, "")
+		return
 	}
 	if ((framesCounter / 20) % 3) == 0 {
 		if selectedField == 0 {
