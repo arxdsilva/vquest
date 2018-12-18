@@ -12,6 +12,7 @@ vQuest is a simple MMORPG made with golang.
 [ ] Solve encoding problem with pass character '●'
 [ ] Add Connecting screen ?
 [ ] Do not use user infos as global value
+[ ] Store password values as hash. This will prevent memory manipulation to get the user pass
 
 # Done
 [x] implement blinking char on `selectedField`
