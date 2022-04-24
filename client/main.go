@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/arxdsilva/vquest/client/display"
 	"github.com/arxdsilva/vquest/client/msg"
-	"github.com/gen2brain/raylib-go/raylib"
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 var clientState int

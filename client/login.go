@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/arxdsilva/vquest/client/display"
-	"github.com/gen2brain/raylib-go/raylib"
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 var selectedField, framesCounter int
