@@ -13,13 +13,15 @@ const lineDistancingFactor = 1.15
 const columnDistancingFactor = 1.4
 
 type Login struct {
-	x, y              int32
-	fontSize          int32
-	color             color.RGBA
-	userText          text.Component
-	userPasswordText  text.Component
-	userNameInput     input.Component
-	userPasswordInput input.Component
+	x, y                      int32
+	fontSize                  int32
+	color                     color.RGBA
+	userText                  text.Component
+	userPasswordText          text.Component
+	userNameInput             input.Component
+	userPasswordInput         input.Component
+	isUserNameInputActive     bool
+	isUserPasswordInputActive bool
 }
 
 func New(x, y, fontSize int32, color color.RGBA, cfg config.Display) Login {
@@ -41,6 +43,7 @@ func New(x, y, fontSize int32, color color.RGBA, cfg config.Display) Login {
 			float32(cfg.Width)*0.1,
 			float32(fontSize),
 			false,
+			true,
 			rl.LightGray,
 		),
 		userPasswordInput: input.New(
@@ -49,14 +52,25 @@ func New(x, y, fontSize int32, color color.RGBA, cfg config.Display) Login {
 			float32(cfg.Width)*0.1,
 			float32(fontSize),
 			true,
+			false,
 			rl.LightGray,
 		),
+		isUserNameInputActive:     true,
+		isUserPasswordInputActive: false,
 	}
 }
 
 func (l *Login) Draw() {
+	l.manageInputHighlight()
 	l.userText.Draw()
 	l.userPasswordText.Draw()
 	l.userNameInput.Draw()
 	l.userPasswordInput.Draw()
+}
+
+func (l *Login) manageInputHighlight() {
+	if rl.IsKeyReleased(rl.KeyTab) {
+		l.userNameInput.ToggleActive()
+		l.userPasswordInput.ToggleActive()
+	}
 }

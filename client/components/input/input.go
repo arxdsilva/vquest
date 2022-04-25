@@ -25,8 +25,9 @@ type Component struct {
 	frameCounter int
 }
 
-func New(x, y, width, height float32, password bool, color color.RGBA) Component {
+func New(x, y, width, height float32, password, active bool, color color.RGBA) Component {
 	return Component{
+		active:   active,
 		password: password,
 		color:    color,
 		rectangle: rl.Rectangle{
@@ -85,8 +86,13 @@ func (c *Component) highlight() {
 func (c *Component) Draw() {
 	rl.DrawRectangleRec(c.rectangle, c.color)
 	c.text.Draw()
-	if c.onHover() || c.active {
+	if c.active {
+		// if c.onHover() || c.Active {
 		c.highlight()
 		return
 	}
+}
+
+func (c *Component) ToggleActive() {
+	c.active = !c.active
 }
