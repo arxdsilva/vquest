@@ -7,13 +7,16 @@ import (
 )
 
 type Component struct {
+	active    bool
 	password  bool
+	color     color.RGBA
 	rectangle rl.Rectangle
 }
 
-func New(x, y, width, height float32, password bool) Component {
+func New(x, y, width, height float32, password bool, color color.RGBA) Component {
 	return Component{
 		password: password,
+		color:    color,
 		rectangle: rl.Rectangle{
 			X:      x,
 			Y:      y,
@@ -22,15 +25,25 @@ func New(x, y, width, height float32, password bool) Component {
 		}}
 }
 
-func (r *Component) OnHover(color color.RGBA) {
-	rInt := r.rectangle.ToInt32()
+func (c *Component) onHover() bool {
+	return rl.CheckCollisionPointRec(
+		rl.GetMousePosition(), c.rectangle)
+}
+
+func (c *Component) highlight() {
+	c.active = true
+	rInt := c.rectangle.ToInt32()
 	rl.DrawRectangleLines(
 		rInt.X, rInt.Y,
 		rInt.Width, rInt.Height,
-		color)
+		rl.Red)
 }
 
-func (r *Component) Draw(color color.RGBA) {
-	rl.DrawRectangleRec(r.rectangle, color)
-	r.OnHover(rl.Red)
+func (c *Component) Draw() {
+	rl.DrawRectangleRec(c.rectangle, c.color)
+	if c.onHover() {
+		c.highlight()
+		return
+	}
+	c.active = false
 }

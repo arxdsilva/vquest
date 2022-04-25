@@ -29,7 +29,7 @@ func New(cfg config.Config) *LoginScene {
 		form: forms.New(
 			int32(float32(cfg.Display.Width)*0.4),
 			int32(float32(cfg.Display.Height)*0.4),
-			20, rl.LightGray),
+			20, rl.LightGray, cfg.Display),
 	}
 }
 
