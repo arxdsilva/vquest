@@ -33,11 +33,11 @@ func New(cfg config.Config) *LoginScene {
 	}
 }
 
-func (l *LoginScene) Draw() {
+func (l *LoginScene) Render() config.GameState {
 	l.title.Draw()
 	l.form.Draw()
+	if l.form.Authenticated {
+		return config.InGameState
+	}
+	return config.LoginState
 }
-
-// func (l *LoginScene) GoTo(s scenes.Scene) {
-
-// }

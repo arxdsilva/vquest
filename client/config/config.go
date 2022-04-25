@@ -10,9 +10,6 @@ func NewDefault() Config {
 	return Config{
 		GameName:  "vQuest",
 		TargetFPS: 60,
-		Display: Display{
-			Height: 720,
-			Width:  1280,
-		},
+		Display:   NewDisplay(),
 	}
 }
