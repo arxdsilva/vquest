@@ -12,14 +12,17 @@ import (
 const (
 	textMarginLeft = 1.01
 	fontSize       = 20
+	blinkFontSize  = 18
 )
 
 type Component struct {
-	password  bool
-	color     color.RGBA
-	rectangle rl.Rectangle
-	text      text.Component
-	userInput []string
+	active       bool
+	password     bool
+	color        color.RGBA
+	rectangle    rl.Rectangle
+	text         text.Component
+	userInput    []string
+	frameCounter int
 }
 
 func New(x, y, width, height float32, password bool, color color.RGBA) Component {
@@ -68,12 +71,21 @@ func (c *Component) highlight() {
 		displayTxt = strings.Repeat("*", len(displayTxt))
 	}
 	c.text.Text = displayTxt
+
+	// blink "|" to give txt wait feedback sensation to user
+	if ((c.frameCounter / 20) % 3) == 0 {
+		rl.DrawText("|",
+			c.rectangle.ToInt32().X+8+rl.MeasureText(displayTxt, fontSize),
+			c.rectangle.ToInt32().Y, blinkFontSize, rl.Black)
+	}
+
+	c.frameCounter++
 }
 
 func (c *Component) Draw() {
 	rl.DrawRectangleRec(c.rectangle, c.color)
 	c.text.Draw()
-	if c.onHover() {
+	if c.onHover() || c.active {
 		c.highlight()
 		return
 	}
