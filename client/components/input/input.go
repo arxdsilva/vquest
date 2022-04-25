@@ -7,11 +7,13 @@ import (
 )
 
 type Component struct {
+	password  bool
 	rectangle rl.Rectangle
 }
 
-func New(x, y, width, height float32) Component {
+func New(x, y, width, height float32, password bool) Component {
 	return Component{
+		password: password,
 		rectangle: rl.Rectangle{
 			X:      x,
 			Y:      y,
