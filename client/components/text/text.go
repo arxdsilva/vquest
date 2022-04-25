@@ -8,14 +8,14 @@ import (
 
 type Component struct {
 	x, y     int32
-	text     string
+	Text     string
 	fontSize int32
 	color    color.RGBA
 }
 
 func New(text string, x, y, fontSize int32, color color.RGBA) Component {
 	return Component{
-		text:     text,
+		Text:     text,
 		x:        x,
 		y:        y,
 		fontSize: fontSize,
@@ -24,7 +24,7 @@ func New(text string, x, y, fontSize int32, color color.RGBA) Component {
 }
 
 func (c *Component) Draw() {
-	rl.DrawText(c.text, c.x, c.y, c.fontSize, c.color)
+	rl.DrawText(c.Text, c.x, c.y, c.fontSize, c.color)
 }
 
 func (c *Component) OnHover() {
