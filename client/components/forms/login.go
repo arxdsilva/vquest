@@ -70,7 +70,15 @@ func (l *Login) Draw() {
 
 func (l *Login) manageInputHighlight() {
 	if rl.IsKeyReleased(rl.KeyTab) {
-		l.userNameInput.ToggleActive()
-		l.userPasswordInput.ToggleActive()
+		l.toggleInputs()
+		return
 	}
+	if l.userNameInput.Clicked() || l.userPasswordInput.Clicked() {
+		l.toggleInputs()
+	}
+}
+
+func (l *Login) toggleInputs() {
+	l.userNameInput.ToggleActive()
+	l.userPasswordInput.ToggleActive()
 }

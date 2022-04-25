@@ -47,6 +47,11 @@ func (c *Component) onHover() bool {
 		rl.GetMousePosition(), c.rectangle)
 }
 
+func (c *Component) Clicked() bool {
+	return rl.IsMouseButtonReleased(rl.MouseLeftButton) &&
+		c.onHover()
+}
+
 func (c *Component) highlight() {
 	// draw red lines on edge
 	rInt := c.rectangle.ToInt32()
@@ -87,7 +92,6 @@ func (c *Component) Draw() {
 	rl.DrawRectangleRec(c.rectangle, c.color)
 	c.text.Draw()
 	if c.active {
-		// if c.onHover() || c.Active {
 		c.highlight()
 		return
 	}
