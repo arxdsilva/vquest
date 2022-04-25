@@ -44,6 +44,7 @@ func (c *Component) onHover() bool {
 }
 
 func (c *Component) highlight() {
+	// draw red lines on edge
 	rInt := c.rectangle.ToInt32()
 	rl.DrawRectangleLines(
 		rInt.X, rInt.Y,
@@ -54,16 +55,19 @@ func (c *Component) highlight() {
 	key := rl.GetKeyPressed()
 	if (key >= 32) && (key <= 125) {
 		c.userInput = append(c.userInput, fmt.Sprintf("%c", key))
-		c.text.Text = strings.Join(c.userInput, "")
-		return
 	}
 	// get input from user (remove - backspace)
 	// len to avoid panic
 	if rl.IsKeyPressed(rl.KeyBackspace) && len(c.userInput) > 0 {
 		c.userInput = c.userInput[:len(c.userInput)-1]
-		c.text.Text = strings.Join(c.userInput, "")
-		return
 	}
+
+	// display input as needed
+	displayTxt := strings.Join(c.userInput, "")
+	if c.password {
+		displayTxt = strings.Repeat("*", len(displayTxt))
+	}
+	c.text.Text = displayTxt
 }
 
 func (c *Component) Draw() {
